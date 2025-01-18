@@ -13,4 +13,4 @@ EXPOSE 8080
 
 COPY --from=build /target/acerta-0.1.jar app.jar
 
-ENTRYPOINT [ "java, "-jar", "app.jar" ]
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
