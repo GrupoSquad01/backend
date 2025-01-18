@@ -5,7 +5,7 @@ Este controlador (`UsuariosController`) expõe uma série de endpoints para real
 ## 1. **Cadastrar Usuário**
    - **Método HTTP:** `POST`
    - **Endpoint:** `/usuarios`
-   - **Descrição:** Cria um novo usuário.
+   - **Descrição:** Cria um novo usuário
    - **Corpo da Requisição (JSON):**
      ```json
      {
