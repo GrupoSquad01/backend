@@ -121,6 +121,7 @@ npm start `
 
  - O frontend estará disponível em http://localhost:3000.
 
+---
 ## Endpoints de Usuários
 
 O controlador expõe uma série de endpoints para realizar operações CRUD (Criar, Ler, Atualizar e Deletar) no recurso "usuário". As operações são realizadas por meio do serviço `UsuariosService`. A seguir estão os detalhes de cada endpoint:
@@ -186,60 +187,82 @@ O controlador expõe uma série de endpoints para realizar operações CRUD (Cri
 
 ---
 ## Endpoints de Disciplina
+
 **Disciplina:**  
- - A entidade Disciplina representa as matérias de estudo que os usuários podem escolher no sistema.
+- A entidade Disciplina representa as matérias de estudo que os usuários podem escolher no sistema.
 
 **Atributos:**  
--  id: Identificador único da disciplina (gerado automaticamente).
--  nome: Nome da disciplina (ex: Matemática, Física, Química).  
+- **id**: Identificador único da disciplina (gerado automaticamente).
+- **nome**: Nome da disciplina (ex: Matemática, Física, Química).  
 
 **Funcionalidades:**  
 1. **Criar disciplina**
-   - Método: POST /disciplinas
-   - Corpo: { "nome": "Nome da Disciplina" }
-  
-2. **Listar todas as disciplinas**
-   - Método: GET /disciplina
-  
-3. **Atualizar disciplina**
-   - Método: PUT /disciplinas/{id}
-   - Corpo: { "nome": "Novo Nome da Disciplina" }
-  
-4. **Excluir disciplina**
-   - Método: DELETE /disciplinas/{id}
-   
-5. **Buscar disciplina por ID**
-   - Método: GET /disciplinas/{id}
-       
-## Endpoints de DisciplinaUsuario  
+   - **Método**: `POST /disciplinas`
+   - **Corpo**:  
+     ```json
+     { "nome": "Nome da Disciplina" }
+     ```
 
-**DisciplinaUsuario**
-- A entidade DisciplinaUsuario representa o vínculo entre um usuário e uma disciplina, permitindo registrar o progresso de cada usuário em cada disciplina.
+2. **Listar todas as disciplinas**
+   - **Método**: `GET /disciplinas`
+
+3. **Atualizar disciplina**
+   - **Método**: `PUT /disciplinas/{id}`
+   - **Corpo**:  
+     ```json
+     { "nome": "Novo Nome da Disciplina" }
+     ```
+
+4. **Excluir disciplina**
+   - **Método**: `DELETE /disciplinas/{id}`
+
+5. **Buscar disciplina por ID**
+   - **Método**: `GET /disciplinas/{id}`
   
+
+---
+
+## Endpoints de UsuarioDisciplina
+
+**UsuarioDisciplina**  
+- A entidade `UsuarioDisciplina` representa o vínculo entre um usuário e uma disciplina, permitindo registrar o progresso de cada usuário em cada disciplina.
+
 **Atributos:**  
-- id: Identificador único do relacionamento (gerado automaticamente).
-- usuario: Relacionamento com o usuário associado.
-- disciplina: Relacionamento com a disciplina associada.
-- progresso: Progresso do usuário na disciplina, representado por um valor numérico.
+- **id**: Identificador único do relacionamento (gerado automaticamente).
+- **usuario**: Relacionamento com o usuário associado.
+- **disciplina**: Relacionamento com a disciplina associada.
+- **respostasCertas**: Número de respostas corretas registradas para o usuário na disciplina.
 
 **Funcionalidades:**  
-1. Associar usuário a uma disciplina
-   - Método: POST /disciplinas-usuarios
-   - Corpo: { "usuarioId": 1, "disciplinaId": 2, "progresso": 20 }
-     
-2. Listar todas as associaçõe
-   - Método: GET /disciplinas-usuarios
-          
-3. Atualizar o progresso de um usuário em uma disciplina
-   - Método: PUT /disciplinas-usuarios/{id}
-   - Corpo: { "progresso": 50 }
-  
-           
-4. Excluir associação
-   - Método: DELETE /disciplinas-usuarios/{id}
-      
-5. Buscar associação por ID
-   - Método: GET /disciplinas-usuarios/{id}
+1. **Associar usuário a uma disciplina**
+   - **Método**: `POST /usuarios-disciplinas`
+   - **Corpo**:  
+     ```json
+     { 
+       "usuarioId": 1, 
+       "disciplinaId": 2, 
+       "respostasCertas": 20 
+     }
+     ```
+
+2. **Listar todas as associações**
+   - **Método**: `GET /usuarios-disciplinas`
+
+3. **Atualizar o progresso de um usuário em uma disciplina**
+   - **Método**: `PUT /usuarios-disciplinas/{id}`
+   - **Corpo**:  
+     ```json
+     { 
+       "respostasCertas": 50 
+     }
+     ```
+
+4. **Excluir associação**
+   - **Método**: `DELETE /usuarios-disciplinas/{id}`
+
+5. **Buscar associação por ID**
+   - **Método**: `GET /usuarios-disciplinas/{id}`
+
   
 ## Contribuição  
 Se você deseja contribuir com o projeto, sinta-se à vontade para abrir uma pull request. Certifique-se de que suas alterações não quebrem funcionalidades existentes e que o código esteja bem testado.
