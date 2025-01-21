@@ -3,7 +3,10 @@ package br.com.acerta.dto;
 public class DisciplinaDto {
     private String nome;
 
-    // Getters e setters
+    public DisciplinaDto(String nome) {
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }
