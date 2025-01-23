@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UsuarioDisciplinaService {
 
     @Autowired
-    UsuarioDisciplinaRepository usuarioDisciplinaRepository;
+    private UsuarioDisciplinaRepository usuarioDisciplinaRepository;
 
     public UsuarioDisciplina criarUsuarioDisciplina(UsuarioDisciplinaDto usuarioDisciplinaDto) {
         var usuarioDisciplina = new UsuarioDisciplina();

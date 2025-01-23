@@ -1,37 +1,49 @@
 package br.com.acerta.dto;
 
 public class UsuarioDisciplinaDto {
-    private Long usuarioId;
-    private Long disciplinaId;
+	private Long id;
+    private UsuariosDto usuariosDto;
+    private DisciplinaDto disciplinaDto;
     private Integer respostasCertas;
 
-    public UsuarioDisciplinaDto(Long usuarioId, Long disciplinaId, Integer respostasCertas) {
-        this.usuarioId = usuarioId;
-        this.disciplinaId = disciplinaId;
+    public UsuarioDisciplinaDto() {}
+    
+    public UsuarioDisciplinaDto(UsuariosDto usuariosDto, DisciplinaDto disciplinaDto, Integer respostasCertas) {
+        this.usuariosDto = usuariosDto;
+        this.disciplinaDto = disciplinaDto;
         this.respostasCertas = respostasCertas;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getDisciplinaId() {
-        return disciplinaId;
-    }
+	public UsuariosDto getUsuariosDto() {
+		return usuariosDto;
+	}
 
-    public void setDisciplinaId(Long disciplinaId) {
-        this.disciplinaId = disciplinaId;
-    }
+	public void setUsuariosDto(UsuariosDto usuariosDto) {
+		this.usuariosDto = usuariosDto;
+	}
 
-    public Integer getRespostasCertas() {
-        return respostasCertas;
-    }
+	public DisciplinaDto getDisciplinaDto() {
+		return disciplinaDto;
+	}
 
-    public void setRespostasCertas(Integer respostasCertas) {
-        this.respostasCertas = respostasCertas;
-    }
+	public void setDisciplinaDto(DisciplinaDto disciplinaDto) {
+		this.disciplinaDto = disciplinaDto;
+	}
+
+	public Integer getRespostasCertas() {
+		return respostasCertas;
+	}
+
+	public void setRespostasCertas(Integer respostasCertas) {
+		this.respostasCertas = respostasCertas;
+	}
+    
 }

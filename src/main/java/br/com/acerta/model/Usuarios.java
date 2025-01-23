@@ -1,6 +1,5 @@
 package br.com.acerta.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 @Entity

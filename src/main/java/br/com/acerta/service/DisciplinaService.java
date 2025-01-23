@@ -14,7 +14,7 @@ import java.util.Optional;
 public class DisciplinaService {
 
     @Autowired
-    DisciplinaRepository disciplinaRepository;
+    private DisciplinaRepository disciplinaRepository;
 
     public Disciplina criarDisciplina(DisciplinaDto disciplinaDto) {
         var disciplina = new Disciplina();
