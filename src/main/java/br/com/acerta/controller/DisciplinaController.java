@@ -17,17 +17,17 @@ public class DisciplinaController {
     private DisciplinaService disciplinaService;
 
     @PostMapping
-    public ResponseEntity<Disciplina> cadastrar(@RequestBody DisciplinaDto disciplinaDto) {
+    public ResponseEntity<DisciplinaDto> cadastrar(@RequestBody DisciplinaDto disciplinaDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaService.criarDisciplina(disciplinaDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<Disciplina>> listar() {
+    public ResponseEntity<List<DisciplinaDto>> listar() {
         return ResponseEntity.status(HttpStatus.OK).body(disciplinaService.listarDisciplinas());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Disciplina> atualizar(@PathVariable Long id, @RequestBody DisciplinaDto disciplinaDto) {
+    public ResponseEntity<DisciplinaDto> atualizar(@PathVariable Long id, @RequestBody DisciplinaDto disciplinaDto) {
         return ResponseEntity.status(HttpStatus.OK).body(disciplinaService.editarDisciplina(id, disciplinaDto));
     }
 
@@ -38,7 +38,7 @@ public class DisciplinaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Disciplina> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<DisciplinaDto> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(disciplinaService.buscarDisciplinaPorId(id));
     }
 }

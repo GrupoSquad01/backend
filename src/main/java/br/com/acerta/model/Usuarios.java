@@ -2,6 +2,8 @@ package br.com.acerta.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "usuario")
 public class Usuarios {
@@ -21,26 +23,43 @@ public class Usuarios {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "foto")
     private String foto;
+
+    private Timestamp dataNascimento;
+
+    private String nacionalidade;
+
+    private String raca;
+
+    private String genero;
+
+    private int sequenciaDias;
+
+    private Timestamp dataUltimaResposta;
 
 //    Constructors
 
     public Usuarios() {}
 
-    public Usuarios(String nome, String username, String senha, String email, String telefone, String foto) {
+    public Usuarios(Long id, String nome, String username, String email, String senha, String telefone, String foto, Timestamp dataNascimento, String nacionalidade, String raca, String genero, int sequenciaDias, Timestamp dataUltimaResposta) {
+        this.id = id;
         this.nome = nome;
         this.username = username;
-        this.senha = senha;
         this.email = email;
+        this.senha = senha;
         this.telefone = telefone;
         this.foto = foto;
+        this.dataNascimento = dataNascimento;
+        this.nacionalidade = nacionalidade;
+        this.raca = raca;
+        this.genero = genero;
+        this.sequenciaDias = sequenciaDias;
+        this.dataUltimaResposta = dataUltimaResposta;
     }
 
-//    Getters e setters
+    //    Getters e setters
 
 //    ID
     public Long getId() {
@@ -102,5 +121,53 @@ public class Usuarios {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Timestamp getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Timestamp dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public void setNacionalidade(String nacionalidade) {
+        this.nacionalidade = nacionalidade;
+    }
+
+    public String getRaca() {
+        return raca;
+    }
+
+    public void setRaca(String raca) {
+        this.raca = raca;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public int getSequenciaDias() {
+        return sequenciaDias;
+    }
+
+    public void setSequenciaDias(int sequenciaDias) {
+        this.sequenciaDias = sequenciaDias;
+    }
+
+    public Timestamp getDataUltimaResposta() {
+        return dataUltimaResposta;
+    }
+
+    public void setDataUltimaResposta(Timestamp dataUltimaResposta) {
+        this.dataUltimaResposta = dataUltimaResposta;
     }
 }

@@ -53,7 +53,7 @@ public class UsuariosService {
 			dtos.add(dto);
 		}
 		
-		return dtos; 
+		return dtos;
 	}
 
 	public UsuariosDto editarUsuario(Long id, UsuariosDto usuariosDto) {
@@ -96,7 +96,37 @@ public class UsuariosService {
 			usuarioEditado.setTelefone(usuariosDto.getTelefone());
 		else
 			usuariosDto.setTelefone(usuarioEditado.getTelefone());
-		
+
+		if (usuariosDto.getDataNascimento() != null)
+			usuarioEditado.setDataNascimento(usuariosDto.getDataNascimento());
+		else
+			usuariosDto.setDataNascimento(usuarioEditado.getDataNascimento());
+
+		if (usuariosDto.getGenero() != null)
+			usuarioEditado.setGenero(usuariosDto.getGenero());
+		else
+			usuariosDto.setGenero(usuarioEditado.getGenero());
+
+		if (usuariosDto.getRaca() != null)
+			usuarioEditado.setRaca(usuariosDto.getRaca());
+		else
+			usuariosDto.setRaca(usuarioEditado.getRaca());
+
+		if (usuariosDto.getNacionalidade() != null)
+			usuarioEditado.setNacionalidade(usuariosDto.getNacionalidade());
+		else
+			usuariosDto.setNacionalidade(usuarioEditado.getNacionalidade());
+
+		if (usuariosDto.getDataUltimaResposta() != null)
+			usuarioEditado.setDataUltimaResposta(usuariosDto.getDataUltimaResposta());
+		else
+			usuariosDto.setDataUltimaResposta(usuarioEditado.getDataUltimaResposta());
+
+		if (usuariosDto.getSequenciaDias() != 0)
+			usuarioEditado.setSequenciaDias(usuariosDto.getSequenciaDias());
+		else
+			usuariosDto.setSequenciaDias(usuarioEditado.getSequenciaDias());
+
 		usuariosRepository.saveAndFlush(usuarioEditado);
 		
 		BeanUtils.copyProperties(usuarioEditado, usuariosDto);

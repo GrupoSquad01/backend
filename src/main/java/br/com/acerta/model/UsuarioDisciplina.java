@@ -63,4 +63,3 @@ public class UsuarioDisciplina {
         this.respostasCertas = respostasCertas;
     }
 }
-

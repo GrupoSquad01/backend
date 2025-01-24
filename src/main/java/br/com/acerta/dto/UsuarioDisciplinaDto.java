@@ -1,18 +1,21 @@
 package br.com.acerta.dto;
 
+import br.com.acerta.model.Disciplina;
+import br.com.acerta.model.Usuarios;
+
 public class UsuarioDisciplinaDto {
 	private Long id;
-    private UsuariosDto usuariosDto;
-    private DisciplinaDto disciplinaDto;
-    private Integer respostasCertas;
+	private Long usuario;
+	private Long disciplina;
+	private Integer respostasCertas;
 
-    public UsuarioDisciplinaDto() {}
-    
-    public UsuarioDisciplinaDto(UsuariosDto usuariosDto, DisciplinaDto disciplinaDto, Integer respostasCertas) {
-        this.usuariosDto = usuariosDto;
-        this.disciplinaDto = disciplinaDto;
-        this.respostasCertas = respostasCertas;
-    }
+	public UsuarioDisciplinaDto() {}
+
+	public UsuarioDisciplinaDto(Long usuariosDto, Long disciplinaDto, Integer respostasCertas) {
+		this.usuario = usuariosDto;
+		this.disciplina = disciplinaDto;
+		this.respostasCertas = respostasCertas;
+	}
 
 	public Long getId() {
 		return id;
@@ -22,20 +25,20 @@ public class UsuarioDisciplinaDto {
 		this.id = id;
 	}
 
-	public UsuariosDto getUsuariosDto() {
-		return usuariosDto;
+	public Long getUsuariosDto() {
+		return usuario;
 	}
 
-	public void setUsuariosDto(UsuariosDto usuariosDto) {
-		this.usuariosDto = usuariosDto;
+	public void setUsuariosDto(Long usuariosDto) {
+		this.usuario = usuariosDto;
 	}
 
-	public DisciplinaDto getDisciplinaDto() {
-		return disciplinaDto;
+	public Long getDisciplinaDto() {
+		return disciplina;
 	}
 
-	public void setDisciplinaDto(DisciplinaDto disciplinaDto) {
-		this.disciplinaDto = disciplinaDto;
+	public void setDisciplinaDto(Long disciplinaDto) {
+		this.disciplina = disciplinaDto;
 	}
 
 	public Integer getRespostasCertas() {
@@ -45,5 +48,5 @@ public class UsuarioDisciplinaDto {
 	public void setRespostasCertas(Integer respostasCertas) {
 		this.respostasCertas = respostasCertas;
 	}
-    
+
 }

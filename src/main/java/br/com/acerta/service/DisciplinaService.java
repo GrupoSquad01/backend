@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,41 +17,68 @@ public class DisciplinaService {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
-    public Disciplina criarDisciplina(DisciplinaDto disciplinaDto) {
+    public DisciplinaDto criarDisciplina(DisciplinaDto disciplinaDto) {
         var disciplina = new Disciplina();
+
         BeanUtils.copyProperties(disciplinaDto, disciplina);
-        return disciplinaRepository.save(disciplina);
+        disciplinaRepository.saveAndFlush(disciplina);
+
+        disciplinaDto.setId(disciplina.getId());
+
+        return disciplinaDto;
     }
 
-    public List<Disciplina> listarDisciplinas() {
-        return disciplinaRepository.findAll();
+    public List<DisciplinaDto> listarDisciplinas() {
+        List<Disciplina> disciplinas = disciplinaRepository.findAll();
+        List<DisciplinaDto> disciplinasDto = new ArrayList<>();
+
+        for (Disciplina disciplina : disciplinas) {
+            DisciplinaDto disciplinaDto = new DisciplinaDto();
+            BeanUtils.copyProperties(disciplina, disciplinaDto);
+            disciplinasDto.add(disciplinaDto);
+        }
+
+        return disciplinasDto;
     }
 
-    public Disciplina editarDisciplina(Long id, DisciplinaDto disciplinaDto) {
+    public DisciplinaDto editarDisciplina(Long id, DisciplinaDto disciplinaDto) {
         Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
 
         if (disciplina.isEmpty()) {
-            return null;
+            throw new ServiceException("Disciplina não encontrada");
         }
 
-        BeanUtils.copyProperties(disciplinaDto, disciplina.get());
-        return disciplinaRepository.save(disciplina.get());
+        Disciplina disciplinaEdit = disciplina.get();
+
+        if (disciplinaDto.getNome() != null)
+            disciplinaEdit.setNome(disciplinaDto.getNome());
+        else
+            disciplinaDto.setNome(disciplinaEdit.getNome());
+
+        disciplinaRepository.save(disciplinaEdit);
+
+        BeanUtils.copyProperties(disciplinaEdit, disciplinaDto);
+
+        return disciplinaDto;
     }
 
     public void excluirDisciplina(Long id) {
         Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
         if (disciplina.isEmpty()) {
-            return;
+            throw new ServiceException("Disciplina não encontrada");
         }
 
         disciplinaRepository.deleteById(id);
     }
 
-    public Disciplina buscarDisciplinaPorId(Long id) {
+    public DisciplinaDto buscarDisciplinaPorId(Long id) {
         Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
         if (disciplina.isEmpty()) {
-            return null;
+            throw new ServiceException("Disciplina não encontada");
         }
-        return disciplina.get();
+        DisciplinaDto disciplinaDto = new DisciplinaDto();
+        BeanUtils.copyProperties(disciplina.get(), disciplinaDto);
+
+        return disciplinaDto;
     }
 }
