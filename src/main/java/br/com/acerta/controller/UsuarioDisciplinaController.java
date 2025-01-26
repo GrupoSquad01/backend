@@ -49,11 +49,9 @@ public class UsuarioDisciplinaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDisciplina> buscarPorId(@PathVariable Long id) {
-        UsuarioDisciplina usuarioDisciplina = usuarioDisciplinaService.buscarUsuarioDisciplinaPorId(id);
-        if (usuarioDisciplina == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioDisciplina);
+    public ResponseEntity<List<UsuarioDisciplinaDto>> listarDisciplinas(@PathVariable Long id) {
+        List<UsuarioDisciplinaDto> lista = usuarioDisciplinaService.listarDisciplinasUsuario(id);
+        return ResponseEntity.status(HttpStatus.OK).body(lista);
     }
+
 }

@@ -1,11 +1,11 @@
 package br.com.acerta.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario_disciplina")
 public class UsuarioDisciplina {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

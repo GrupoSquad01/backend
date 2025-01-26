@@ -1,7 +1,6 @@
 package br.com.acerta.dto;
 
-import br.com.acerta.model.Disciplina;
-import br.com.acerta.model.Usuarios;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class UsuarioDisciplinaDto {
 	private Long id;

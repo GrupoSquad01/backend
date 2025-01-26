@@ -35,7 +35,7 @@ public class Usuarios {
 
     private String genero;
 
-    private int sequenciaDias;
+    private Integer sequenciaDias;
 
     private Timestamp dataUltimaResposta;
 

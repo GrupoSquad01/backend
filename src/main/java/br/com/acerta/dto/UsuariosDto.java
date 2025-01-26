@@ -1,10 +1,8 @@
 package br.com.acerta.dto;
 
-
 import java.sql.Timestamp;
 
 public class UsuariosDto {
-	
 	private Long id;
 	
     private String nome;

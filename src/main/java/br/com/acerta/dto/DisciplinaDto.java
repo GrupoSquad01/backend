@@ -7,6 +7,10 @@ public class DisciplinaDto {
     private String nome;
 
     public DisciplinaDto() {}
+
+    public DisciplinaDto(Long id) {
+        this.id = id;
+    }
     
     public DisciplinaDto(String nome) {
         this.nome = nome;
