@@ -1,6 +1,12 @@
-# Acerta!
+# Acerta! - Backend
 
-O **Acerta!** é uma aplicação web destinada ao estudo de vestibulares, concursos, etc, que utiliza gamificação e IA para ajudar os usuários a se prepararem de maneira eficaz. O sistema permite que os usuários se registrem, acompanhem seu progresso em várias disciplinas e realizem simulados personalizados.
+O **Acerta!** é uma aplicação web destinada ao estudo de vestibulares, concursos, etc, que utiliza gamificação e IA para ajudar os usuários a se prepararem de maneira eficaz.  O sistema permite que os usuários se registrem, acompanhem seu progresso em várias disciplinas e realizem simulados personalizados.
+
+A principal proposta do AppAcerta é proporcionar aos usuários uma experiência de aprendizado dinâmica, com questões personalizadas pela IA, além de um sistema de XP (experiência) para incentivar o engajamento contínuo com os estudos.
+
+Este repositório contém o código-fonte do **backend**, desenvolvido utilizando Java com o framework Spring Boot e utiliza o banco de dados PostgreSQL para gerenciar os dados dos usuários, disciplinas, progressos e muito mais.
+
+
 
 ## Estrutura do Projeto
 
