@@ -127,147 +127,174 @@ npm start `
 
  - O frontend estará disponível em http://localhost:3000.
 
----
-## Endpoints de Usuários
+## Configuração do Banco de Dados (PostgreSQL)
 
-O controlador expõe uma série de endpoints para realizar operações CRUD (Criar, Ler, Atualizar e Deletar) no recurso "usuário". As operações são realizadas por meio do serviço `UsuariosService`. A seguir estão os detalhes de cada endpoint:
+1. **Instalar o PostgreSQL** (se não tiver instalado):
+   - Baixe o PostgreSQL no [site oficial](https://www.postgresql.org/download/).
 
-1. **Cadastrar Usuário**
-   - **Método HTTP:** `POST`
-   - **Endpoint:** `/usuarios`
-   - **Descrição:** Cria um novo usuário
-   - **Corpo da Requisição (JSON):**
-     ```json
-     {
-       "nome": "Nome do Usuário",
-       "username": "username_do_usuario",
-       "email": "email@dominio.com",
-       "senha": "senha123"
-     }
-     ```
-   - **Resposta:** Retorna o usuário criado com status HTTP 201 (Criado).
+2. **Criar o banco de dados**:
+   - Após instalar o PostgreSQL, abra o terminal ou o pgAdmin e execute o seguinte comando para criar o banco de dados:
 
----
-
-2. **Listar Todos os Usuários**
-   - **Método HTTP:** `GET`
-   - **Endpoint:** `/usuarios`
-   - **Descrição:** Retorna a lista de todos os usuários cadastrados no sistema.
-   - **Resposta:** Lista de usuários com status HTTP 200 (OK).
-
----
-
-3. **Buscar Usuário por ID**
-   - **Método HTTP:** `GET`
-   - **Endpoint:** `/usuarios/{id}`
-   - **Descrição:** Retorna as informações de um usuário específico, identificado pelo seu ID.
-   - **Parâmetro:** `id` (Identificador do usuário)
-   - **Resposta:** Detalhes do usuário com status HTTP 200 (OK).
-
----
-
-4. **Atualizar Usuário**
-   - **Método HTTP:** `PUT`
-   - **Endpoint:** `/usuarios/{id}`
-   - **Descrição:** Atualiza os dados de um usuário existente.
-   - **Parâmetro:** `id` (Identificador do usuário)
-   - **Corpo da Requisição (JSON):**
-     ```json
-     {
-       "nome": "Novo Nome",
-       "username": "novo_username",
-       "email": "novo_email@dominio.com",
-       "senha": "nova_senha123"
-     }
-     ```
-   - **Resposta:** Usuário atualizado com status HTTP 200 (OK).
-
----
-
-5. **Remover Usuário**
-   - **Método HTTP:** `DELETE`
-   - **Endpoint:** `/usuarios/{id}`
-   - **Descrição:** Exclui um usuário do sistema.
-   - **Parâmetro:** `id` (Identificador do usuário)
-   - **Resposta:** Status HTTP 200 (OK) indicando que o usuário foi excluído com sucesso.
-
----
-## Endpoints de Disciplina
-
-**Disciplina:**  
-- A entidade Disciplina representa as matérias de estudo que os usuários podem escolher no sistema.
-
-**Atributos:**  
-- **id**: Identificador único da disciplina (gerado automaticamente).
-- **nome**: Nome da disciplina (ex: Matemática, Física, Química).  
-
-**Funcionalidades:**  
-1. **Criar disciplina**
-   - **Método**: `POST /disciplinas`
-   - **Corpo**:  
-     ```json
-     { "nome": "Nome da Disciplina" }
+     ```sql
+     CREATE DATABASE acerta;
      ```
 
-2. **Listar todas as disciplinas**
-   - **Método**: `GET /disciplinas`
+3. **Configuração do banco no backend**:
+   - No backend, altere o arquivo `src/main/resources/application.properties` para configurar a conexão com o PostgreSQL:
 
-3. **Atualizar disciplina**
-   - **Método**: `PUT /disciplinas/{id}`
-   - **Corpo**:  
-     ```json
-     { "nome": "Novo Nome da Disciplina" }
+     ```properties
+     spring.datasource.url=jdbc:postgresql://[HOSTNAME]:[PORT]/acerta
+     spring.datasource.username=[USERNAME]
+     spring.datasource.password=[PASSWORD]
+     spring.datasource.driver-class-name=org.postgresql.Driver
+     spring.jpa.hibernate.ddl-auto=update
+     spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+     spring.jpa.show-sql=true
      ```
 
-4. **Excluir disciplina**
-   - **Método**: `DELETE /disciplinas/{id}`
+     - **[HOSTNAME]**: coldly-eventful-wolffish.data-1.tembo.io
+     - **[PORT]**: A porta padrão do PostgreSQL é `5432`
+     - **[USERNAME]**: postgres
+     - **[PASSWORD]**: fxXxTMJXUnzuzTu1
 
-5. **Buscar disciplina por ID**
-   - **Método**: `GET /disciplinas/{id}`
+
+
+---
+
+### Modelo `Disciplina`
+
+A classe `Disciplina` representa uma disciplina de estudo no sistema. Ela é mapeada para a tabela `disciplina` no banco de dados e contém as seguintes informações:
+
+- **id**: Identificador único da disciplina.
+- **nome**: Nome da disciplina (por exemplo, Matemática, Física, etc.).
+
+Essa classe é utilizada para representar e gerenciar as disciplinas disponíveis para os usuários no sistema.
+
+#### Relacionamento:
+- **Nenhum relacionamento direto**. É uma entidade independente, mas pode se relacionar com outras entidades como `UsuarioDisciplina`.
+
+
+### Modelo `UsuarioDisciplina`
+
+A classe `UsuarioDisciplina` é responsável por representar a associação entre um usuário e uma disciplina específica. Ela é mapeada para a tabela `usuario_disciplina` e contém os seguintes atributos:
+
+- **id**: Identificador único dessa associação.
+- **usuario**: Relacionamento com a entidade `Usuarios`. Um usuário pode estar associado a várias disciplinas.
+- **disciplina**: Relacionamento com a entidade `Disciplina`. Uma disciplina pode ter vários usuários associados.
+- **respostasCertas**: Armazena o número de respostas corretas que o usuário obteve em determinada disciplina.
+
+#### Relacionamentos:
+- **@ManyToOne** entre `UsuarioDisciplina` e `Usuarios`: Cada `UsuarioDisciplina` está relacionado a um único usuário.
+- **@ManyToOne** entre `UsuarioDisciplina` e `Disciplina`: Cada `UsuarioDisciplina` está associado a uma disciplina específica.
   
 
----
+### Modelo `Usuarios`
 
-## Endpoints de UsuarioDisciplina
+A classe `Usuarios` representa os dados de um usuário do sistema. Ela está mapeada para a tabela `usuario` no banco de dados e contém as seguintes informações:
 
-**UsuarioDisciplina**  
-- A entidade `UsuarioDisciplina` representa o vínculo entre um usuário e uma disciplina, permitindo registrar o progresso de cada usuário em cada disciplina.
+- **id**: Identificador único do usuário.
+- **nome**: Nome completo do usuário.
+- **username**: Nome de usuário único para login.
+- **senha**: Senha do usuário (armazenada de forma segura).
+- **email**: Endereço de email do usuário.
+- **telefone, foto, dataNascimento, nacionalidade, raca, genero**: Informações adicionais sobre o usuário.
+- **sequenciaDias**: Um contador para acompanhar o número de dias consecutivos em que o usuário completou atividades ou desafios.
+- **dataUltimaResposta**: Timestamp que indica a última vez que o usuário respondeu a uma questão.
 
-**Atributos:**  
-- **id**: Identificador único do relacionamento (gerado automaticamente).
-- **usuario**: Relacionamento com o usuário associado.
-- **disciplina**: Relacionamento com a disciplina associada.
-- **respostasCertas**: Número de respostas corretas registradas para o usuário na disciplina.
+#### Relacionamentos:
+- **@OneToMany** (indireto): O usuário pode ter várias associações com disciplinas, representadas na tabela `usuario_disciplina`.
 
-**Funcionalidades:**  
-1. **Associar usuário a uma disciplina**
-   - **Método**: `POST /usuarios-disciplinas`
-   - **Corpo**:  
-     ```json
-     { 
-       "usuarioId": 1, 
-       "disciplinaId": 2, 
-       "respostasCertas": 20 
-     }
-     ```
+## DisciplinaController
 
-2. **Listar todas as associações**
-   - **Método**: `GET /usuarios-disciplinas`
+O `DisciplinaController` é responsável por gerenciar as operações CRUD (Criar, Ler, Atualizar e Deletar) para as disciplinas no sistema. Ele usa a classe `DisciplinaService` para manipulação dos dados da disciplina.
 
-3. **Atualizar o progresso de um usuário em uma disciplina**
-   - **Método**: `PUT /usuarios-disciplinas/{id}`
-   - **Corpo**:  
-     ```json
-     { 
-       "respostasCertas": 50 
-     }
-     ```
+### Endpoints:
 
-4. **Excluir associação**
-   - **Método**: `DELETE /usuarios-disciplinas/{id}`
+- **POST /disciplinas**:
+  - **Descrição**: Cria uma nova disciplina.
+  - **Parâmetros**: Um objeto `DisciplinaDto` no corpo da requisição, contendo o nome da disciplina.
+  - **Resposta**: Retorna a disciplina criada com status HTTP `201 Created`.
 
-5. **Buscar associação por ID**
-   - **Método**: `GET /usuarios-disciplinas/{id}`
+- **GET /disciplinas**:
+  - **Descrição**: Lista todas as disciplinas cadastradas.
+  - **Resposta**: Retorna uma lista de `DisciplinaDto` com status HTTP `200 OK`.
+
+- **PUT /disciplinas/{id}**:
+  - **Descrição**: Atualiza uma disciplina existente com base no ID fornecido.
+  - **Parâmetros**: O ID da disciplina na URL e um objeto `DisciplinaDto` no corpo da requisição com os novos dados.
+  - **Resposta**: Retorna a disciplina atualizada com status HTTP `200 OK`.
+
+- **DELETE /disciplinas/{id}**:
+  - **Descrição**: Remove uma disciplina com base no ID fornecido.
+  - **Parâmetros**: O ID da disciplina na URL.
+  - **Resposta**: Retorna status HTTP `200 OK` indicando que a operação foi bem-sucedida.
+
+- **GET /disciplinas/{id}**:
+  - **Descrição**: Busca uma disciplina pelo ID fornecido.
+  - **Parâmetros**: O ID da disciplina na URL.
+  - **Resposta**: Retorna a disciplina correspondente com status HTTP `200 OK`.
+
+## UsuarioDisciplinaController
+
+O `UsuarioDisciplinaController` gerencia as operações CRUD para associar usuários a disciplinas, permitindo também manipular dados específicos dessa associação, como o número de respostas corretas em cada disciplina.
+
+### Endpoints:
+
+- **POST /usuarios-disciplinas**:
+  - **Descrição**: Cria uma nova associação entre um usuário e uma disciplina.
+  - **Parâmetros**: Um objeto `UsuarioDisciplinaDto` no corpo da requisição com os dados do usuário, disciplina e o número de respostas corretas.
+  - **Resposta**: Retorna a associação criada com status HTTP `200 OK`.
+
+- **GET /usuarios-disciplinas**:
+  - **Descrição**: Lista todas as associações entre usuários e disciplinas.
+  - **Resposta**: Retorna uma lista de `UsuarioDisciplinaDto` com status HTTP `200 OK`.
+
+- **PUT /usuarios-disciplinas/{id}**:
+  - **Descrição**: Atualiza uma associação existente entre usuário e disciplina.
+  - **Parâmetros**: O ID da associação na URL e um objeto `UsuarioDisciplinaDto` com os novos dados.
+  - **Resposta**: Retorna a associação atualizada com status HTTP `200 OK`.
+
+- **DELETE /usuarios-disciplinas/{id}**:
+  - **Descrição**: Remove uma associação entre um usuário e uma disciplina.
+  - **Parâmetros**: O ID da associação na URL.
+  - **Resposta**: Retorna status HTTP `200 OK`.
+
+- **GET /usuarios-disciplinas/{id}**:
+  - **Descrição**: Lista as disciplinas associadas a um usuário específico.
+  - **Parâmetros**: O ID do usuário na URL.
+  - **Resposta**: Retorna uma lista de `UsuarioDisciplinaDto` com as disciplinas associadas com status HTTP `200 OK`.
+  - 
+
+## UsuariosController
+
+O `UsuariosController` gerencia as operações CRUD para os usuários do sistema, permitindo o cadastro, atualização, listagem e exclusão de usuários, além de buscar um usuário específico pelo ID.
+
+### Endpoints:
+
+- **POST /usuarios**:
+  - **Descrição**: Cria um novo usuário.
+  - **Parâmetros**: Um objeto `UsuariosDto` no corpo da requisição com os dados do usuário (nome, email, etc.).
+  - **Resposta**: Retorna o usuário criado com status HTTP `201 Created`.
+
+- **GET /usuarios**:
+  - **Descrição**: Lista todos os usuários cadastrados.
+  - **Resposta**: Retorna uma lista de `UsuariosDto` com status HTTP `200 OK`.
+
+- **PUT /usuarios/{id}**:
+  - **Descrição**: Atualiza os dados de um usuário existente.
+  - **Parâmetros**: O ID do usuário na URL e um objeto `UsuariosDto` com os novos dados do usuário.
+  - **Resposta**: Retorna o usuário atualizado com status HTTP `200 OK`.
+
+- **DELETE /usuarios/{id}**:
+  - **Descrição**: Remove um usuário com base no ID fornecido.
+  - **Parâmetros**: O ID do usuário na URL.
+  - **Resposta**: Retorna status HTTP `200 OK`.
+
+- **GET /usuarios/{id}**:
+  - **Descrição**: Busca um usuário pelo ID fornecido.
+  - **Parâmetros**: O ID do usuário na URL.
+  - **Resposta**: Retorna o usuário correspondente com status HTTP `200 OK`.
+
 
   
 ## Contribuição  
