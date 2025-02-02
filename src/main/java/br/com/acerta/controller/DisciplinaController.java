@@ -1,7 +1,6 @@
 package br.com.acerta.controller;
 
 import br.com.acerta.dto.DisciplinaDto;
-import br.com.acerta.model.Disciplina;
 import br.com.acerta.service.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

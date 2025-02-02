@@ -6,6 +6,8 @@ import br.com.acerta.repository.UsuariosRepository;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +16,17 @@ import java.util.Optional;
 
 @Service
 public class UsuariosService {
+	
+	private final UsuariosRepository usuariosRepository;
+	private final PasswordEncoder passwordEncoder;
+	
 	@Autowired
-	private UsuariosRepository usuariosRepository;
+	public UsuariosService(UsuariosRepository usuariosRepository, PasswordEncoder passwordEncoder) {
+		this.usuariosRepository = usuariosRepository;
+		this.passwordEncoder = new BCryptPasswordEncoder();
+	}
+	
+	
 	
 	private void validaUsernameExistente(String username) {
 		Optional<Usuarios> userFound = usuariosRepository.findByUsername(username);
@@ -29,12 +40,26 @@ public class UsuariosService {
 			throw new ServiceException("Já existe um usuário cadastrado com o email: " + email);
 	}
 	
+	private void validaSenha(String senha) {
+		if(senha == null || senha.isEmpty())
+			throw new EntityException("A senha não pode ser nula/vazia");
+	}
+	
+	public Optional<Usuarios> findByUsername(String username) {
+		Optional<Usuarios> userFound = usuariosRepository.findByUsername(username);
+		if(userFound.isEmpty())
+			throw new ServiceException("Usuário não encontrado");
+		return userFound;
+	}
+	
 	public UsuariosDto criarUsuario(UsuariosDto usuariosDto) {
 		validaUsernameExistente(usuariosDto.getUsername());
 		validaEmailExistente(usuariosDto.getEmail());
+		validaSenha(usuariosDto.getSenha());
 		
 		var usuario = new Usuarios();
 		BeanUtils.copyProperties(usuariosDto, usuario);
+		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		
 		usuariosRepository.saveAndFlush(usuario);
 		
@@ -71,9 +96,10 @@ public class UsuariosService {
 		} else
 			usuariosDto.setUsername(usuarioEditado.getUsername());
 		
-		if(usuariosDto.getSenha() != null)
-			usuarioEditado.setSenha(usuariosDto.getSenha());
-		else
+		if(usuariosDto.getSenha() != null) {
+			validaSenha(usuariosDto.getSenha());
+			usuarioEditado.setSenha(passwordEncoder.encode(usuariosDto.getSenha()));
+		} else
 			usuariosDto.setSenha(usuarioEditado.getSenha());
 		
 		if(usuariosDto.getEmail() != null && !usuarioEditado.getEmail().equals(usuariosDto.getEmail())) {

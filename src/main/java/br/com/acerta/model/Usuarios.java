@@ -11,7 +11,6 @@ public class Usuarios {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
     private String nome;
 
     @Column(name = "username", nullable = false)
@@ -35,7 +34,7 @@ public class Usuarios {
 
     private String genero;
 
-    private Integer sequenciaDias;
+    private Integer sequenciaDias = 0;
 
     private Timestamp dataUltimaResposta;
 
@@ -43,7 +42,7 @@ public class Usuarios {
 
     public Usuarios() {}
 
-    public Usuarios(Long id, String nome, String username, String email, String senha, String telefone, String foto, Timestamp dataNascimento, String nacionalidade, String raca, String genero, int sequenciaDias, Timestamp dataUltimaResposta) {
+    public Usuarios(Long id, String nome, String username, String email, String senha, String telefone, String foto, Timestamp dataNascimento, String nacionalidade, String raca, String genero, Integer sequenciaDias, Timestamp dataUltimaResposta) {
         this.id = id;
         this.nome = nome;
         this.username = username;

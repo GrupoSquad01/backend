@@ -25,13 +25,13 @@ public class UsuariosDto {
 
 	private String genero;
 
-	private Integer sequenciaDias;
+	private Integer sequenciaDias = 0;
 
 	private Timestamp dataUltimaResposta;
 
     public UsuariosDto() {}
     
-    public UsuariosDto(String nome, String username, String senha, String email, String telefone, String foto, Timestamp dataNascimento, String nacionalidade, String raca, String genero, int sequenciaDias, Timestamp dataUltimaResposta) {
+    public UsuariosDto(String nome, String username, String senha, String email, String telefone, String foto, Timestamp dataNascimento, String nacionalidade, String raca, String genero, Integer sequenciaDias, Timestamp dataUltimaResposta) {
         this.nome = nome;
         this.username = username;
         this.senha = senha;
