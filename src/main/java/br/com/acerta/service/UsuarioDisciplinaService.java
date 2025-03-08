@@ -33,7 +33,6 @@ public class UsuarioDisciplinaService {
             throw new IllegalArgumentException("Usuário e Disciplina são obrigatórios para criar o vínculo.");
         }
 
-
         Usuarios userEntity = usuariosRepository.findById(usuarioDisciplinaDto.getUsuariosDto())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Usuário não encontrado com ID: " + usuarioDisciplinaDto.getUsuariosDto()
@@ -52,8 +51,6 @@ public class UsuarioDisciplinaService {
                 disciplinaEntity,
                 usuarioDisciplinaDto.getRespostasCertas() != null ? usuarioDisciplinaDto.getRespostasCertas() : 0
         );
-
-
 
         usuarioDisciplina = usuarioDisciplinaRepository.save(usuarioDisciplina);
 
