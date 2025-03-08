@@ -15,38 +15,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import br.com.acerta.service.CustomUserDetailsService;
 import br.com.acerta.util.JwtAuthenticationFilter;
 
-
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	@Lazy
+    @Autowired
+    @Lazy
     private JwtAuthenticationFilter jwtAuthenticationFilter;
-	
-    protected void configure(HttpSecurity http) throws Exception {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/auth/**", "/h2-console/**", "/").permitAll() // Permite acesso público à raiz
+                        .anyRequest().authenticated() // Exige autenticação para outras rotas
+                )
+                .csrf(csrf -> csrf.disable());
+
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-    @Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/h2-console/**").permitAll() // Permite acesso público
-                        .anyRequest().authenticated()
-                )
-                .csrf(csrf -> csrf.disable());
-        
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
-	
-	@Bean
+    @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, CustomUserDetailsService service) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 
@@ -56,5 +51,4 @@ public class SecurityConfig {
 
         return authenticationManagerBuilder.build();
     }
-	
 }
