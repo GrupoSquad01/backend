@@ -32,7 +32,7 @@ public class AuthController {
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
-	@PostMapping(value = "/cadastrar")
+	@PostMapping("/cadastrar")
     public ResponseEntity<UsuariosDto> cadastrar(@RequestBody UsuariosDto usuariosDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuariosService.criarUsuario(usuariosDto));
     }

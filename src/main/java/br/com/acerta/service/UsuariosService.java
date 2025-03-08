@@ -26,8 +26,6 @@ public class UsuariosService {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 	
-	
-	
 	private void validaUsernameExistente(String username) {
 		Optional<Usuarios> userFound = usuariosRepository.findByUsername(username);
 		if(userFound.isPresent())
