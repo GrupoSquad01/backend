@@ -1,8 +1,5 @@
 package br.com.acerta.repository;
 
-import br.com.acerta.dto.DisciplinaDto;
-import br.com.acerta.dto.UsuarioDisciplinaDto;
-import br.com.acerta.dto.UsuariosDto;
 import br.com.acerta.model.Disciplina;
 import br.com.acerta.model.UsuarioDisciplina;
 import br.com.acerta.model.Usuarios;

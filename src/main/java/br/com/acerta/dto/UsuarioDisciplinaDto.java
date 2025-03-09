@@ -1,7 +1,5 @@
 package br.com.acerta.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 public class UsuarioDisciplinaDto {
 	private Long id;
 	private Long usuario;

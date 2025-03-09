@@ -1,20 +1,13 @@
 package br.com.acerta.controller;
 
 import br.com.acerta.dto.UsuarioDisciplinaDto;
-import br.com.acerta.model.Disciplina;
-import br.com.acerta.model.UsuarioDisciplina;
-import br.com.acerta.model.Usuarios;
-import br.com.acerta.repository.DisciplinaRepository;
-import br.com.acerta.repository.UsuariosRepository;
 import br.com.acerta.service.UsuarioDisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios-disciplinas")
